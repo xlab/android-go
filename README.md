@@ -6,7 +6,7 @@ Because I can.
 
 Somewhere in the code of a native Go app for Android:
 
-```
+```go
 // +build android
 
 import "github.com/android-go/android"
