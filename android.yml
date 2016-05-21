@@ -10,7 +10,7 @@ GENERATOR:
     - android/asset_manager.h
     - android/asset_manager_jni.h
     # - android/bitmap.h
-    # - android/configuration.h
+    - android/configuration.h
     - android/input.h
     - android/keycodes.h
     - android/log.h
@@ -44,7 +44,7 @@ PARSER:
     - asset_manager.h
     - asset_manager_jni.h
     # - bitmap.h
-    # - configuration.h
+    - configuration.h
     - input.h
     - keycodes.h
     - log.h
@@ -61,31 +61,41 @@ PARSER:
 
 TRANSLATOR: 
   ConstRules: 
-    defines: eval
+    defines: expand
+    enum: expand
+  MemTips:
+    - {target: ^J, self: raw}
+    - {target: AAssetManager$, self: raw}
+    - {target: ANativeActivityCallbacks$, self: raw}
   PtrTips:
-     function:
+    type:
+      - {target: ^J, self: sref}
+    function:
       - {target: ".", tips: [sref,sref,sref]} # ref by default for all
   Rules: 
     global: 
-      # TODO: sort out ignores into function category
+      - {action: accept, from: ^A}
+      - {action: ignore, from: ^ABS}
+      - {action: replace, from: "(?i)^Android"}
+      # Markov algorithm replace-fu for geting rid of ANames and AAliases.
+      - {action: replace, from: "^AA", to: xA}
+      - {action: replace, from: ^A}
+      - {action: replace, from: ^xA, to: A}
+    function:
       - {action: ignore, from: ANativeActivity_onCreate}
       - {action: ignore, from: JNI_OnLoad}
       - {action: ignore, from: JNI_OnUnload}
-
-      - {action: accept, from: ^A}
+      # TODO: gomobile works on platform-15 that does not have these
+      - {action: ignore, from: AConfiguration_getLayoutDirection}
+      - {action: ignore, from: AConfiguration_setLayoutDirection}
+    type:
       - {action: accept, from: ^J}
-      # Markov algorithm replace-fu for geting rid of ANames and AAliases.
-      - {action: replace, from: ^Android, to: xAndroid}
-      - {action: replace, from: ^AA, to: xA}
-      - {action: replace, from: ^A}
-      - {action: replace, from: ^xAndroid}
-      - {action: replace, from: ^xA, to: A}
+      - {action: replace, from: "_t$"}
     const:
-      - {action: ignore, from: _H$}
-      - {action: accept, from: ^ANDROID_}
-      - {action: replace, from: ^ANDROID_, to: _}
+      - {action: ignore, from: TTS_H$}
+      - {transform: lower}
     private:
       - {transform: unexport}
     post-global: 
-      - {action: replace, from: _$}
+      - {transform: export}
       - {load: snakecase}
