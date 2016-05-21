@@ -90,6 +90,7 @@ TRANSLATOR:
       - {action: ignore, from: AConfiguration_setLayoutDirection}
     type:
       - {action: accept, from: ^J}
+      - {action: accept, from: jobject$}
       - {action: replace, from: "_t$"}
     const:
       - {action: ignore, from: TTS_H$}
