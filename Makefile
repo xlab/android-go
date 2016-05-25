@@ -1,5 +1,7 @@
+CPP = $(shell ndk-which cpp)
+
 all:
-	CPP=arm-linux-androideabi-cpp cgogen -ccdefs=true android.yml
+	CPP="$(CPP)" cgogen -ccdefs=true android.yml
 
 clean:
 	rm -f android/cgo_helpers.go android/cgo_helpers.h android/cgo_helpers.c
