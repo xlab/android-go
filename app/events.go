@@ -260,8 +260,10 @@ func onInputQueueCreated(activity *C.ANativeActivity, queue *C.AInputQueue) {
 	case out <- event:
 		// dispatched
 	case <-time.After(defaultApp.maxDispatchTime):
-		// timed out
+		return // timed out
 	}
+
+	<-defaultApp.inputQueueHandled
 }
 
 //export onInputQueueDestroyed
@@ -281,8 +283,10 @@ func onInputQueueDestroyed(activity *C.ANativeActivity, queue *C.AInputQueue) {
 	case out <- event:
 		// dispatched
 	case <-time.After(defaultApp.maxDispatchTime):
-		// timed out
+		return // timed out
 	}
+
+	<-defaultApp.inputQueueHandled
 }
 
 type ContentRectEvent struct {

@@ -50,6 +50,7 @@ func callMain(mainPC uintptr) {
 type NativeActivity interface {
 	InitDone()
 	NativeWindowRedrawDone()
+	InputQueueHandled()
 	LifecycleEvents() <-chan LifecycleEvent
 	HandleSaveInstanceState(fn SaveStateFunc)
 	HandleWindowFocusEvents(out chan<- WindowFocusEvent)
@@ -62,6 +63,7 @@ type NativeActivity interface {
 var defaultApp = &nativeActivity{
 	lifecycleEvents:        make(chan LifecycleEvent),
 	nativeWindowRedrawDone: make(chan Signal, 1),
+	inputQueueHandled:      make(chan Signal, 1),
 	maxDispatchTime:        1 * time.Second,
 
 	initWG: new(sync.WaitGroup),
@@ -96,6 +98,7 @@ type nativeActivity struct {
 
 	saveInstanceStateFunc  SaveStateFunc
 	nativeWindowRedrawDone chan Signal
+	inputQueueHandled      chan Signal
 
 	initWG *sync.WaitGroup
 	mux    *sync.RWMutex
@@ -118,6 +121,13 @@ type Signal struct{}
 func (a *nativeActivity) NativeWindowRedrawDone() {
 	select {
 	case a.nativeWindowRedrawDone <- Signal{}:
+	default:
+	}
+}
+
+func (a *nativeActivity) InputQueueHandled() {
+	select {
+	case a.inputQueueHandled <- Signal{}:
 	default:
 	}
 }

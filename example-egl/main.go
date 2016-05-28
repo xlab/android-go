@@ -21,6 +21,8 @@ func main() {
 
 	nativeWindowEvents := make(chan app.NativeWindowEvent, 1)
 	windowFocusEvents := make(chan app.WindowFocusEvent, 1)
+	inputQueueEvents := make(chan app.InputQueueEvent, 1)
+	inputQueueChan := make(chan *android.InputQueue, 1)
 	var displayHandle *DisplayHandle
 	var windowFocused bool
 
@@ -44,6 +46,10 @@ func main() {
 	app.Main(func(a app.NativeActivity) {
 		a.HandleNativeWindowEvents(nativeWindowEvents)
 		a.HandleWindowFocusEvents(windowFocusEvents)
+		a.HandleInputQueueEvents(inputQueueEvents)
+		go app.HandleInputQueues(inputQueueChan, func() {
+			a.InputQueueHandled()
+		}, app.LogInputEvents)
 		a.InitDone()
 		for {
 			select {
@@ -74,6 +80,13 @@ func main() {
 					sensorMan.Stop()
 				}
 				draw(displayHandle, stateX, stateY, stateZ)
+			case event := <-inputQueueEvents:
+				switch event.Kind {
+				case app.QueueCreated:
+					inputQueueChan <- event.Queue
+				case app.QueueDestroyed:
+					inputQueueChan <- nil
+				}
 			case event := <-nativeWindowEvents:
 				switch event.Kind {
 				case app.NativeWindowRedrawNeeded:
