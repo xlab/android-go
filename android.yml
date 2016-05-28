@@ -9,7 +9,6 @@ GENERATOR:
     - android/api-level.h
     - android/asset_manager.h
     - android/asset_manager_jni.h
-    # - android/bitmap.h
     - android/configuration.h
     - android/input.h
     - android/keycodes.h
@@ -43,7 +42,6 @@ PARSER:
     - api-level.h
     - asset_manager.h
     - asset_manager_jni.h
-    # - bitmap.h
     - configuration.h
     - input.h
     - keycodes.h

@@ -1,15 +1,17 @@
 CPP = $(shell ndk-which cpp)
 
-all: all-egl all-gles all-gles2
+all: gen-android gen-egl gen-gles gen-gles2
+
+gen-android:
 	CPP="$(CPP)" cgogen -ccdefs=true android.yml
 
-all-egl:
+gen-egl:
 	cgogen egl.yml
 
-all-gles:
+gen-gles:
 	cgogen gles.yml
 
-all-gles2:
+gen-gles2:
 	cgogen gles2.yml
 
 clean: clean-egl clean-gles clean-gles2
