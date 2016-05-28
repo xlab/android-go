@@ -111,9 +111,7 @@ So, for Android developent, gomobile defaults to `r10` SDK with `android-15`
 stripped-down NDK, there is a lot of code written to automate this process and
 there is no way to override this environment, even by rewriting a lot of
 gomobile bootstrapping code. It's a great mess. Too much time wasted trying to
-switch to the `r12-beta1` SDK and the `android-23` NDK platform. Gomobile avoids
-using the standard Android pipeline tools such as Gradle / Ant / ndk-build and
-others and instead incorporates obscure APK packing logic. Instead of providing
+switch to the `r12-beta1` SDK and the `android-23` NDK platform. Instead of providing
 a good document how to build the Go-based apps and incorporate them into any of
 the existing development process, the Gomobile project introduces tons of
 hardcoded scripts in Go. Nuff said, even [the article] that shows the principle
