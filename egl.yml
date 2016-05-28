@@ -44,6 +44,10 @@ TRANSLATOR:
     type:
       - {action: replace, from: "_t$"}
     const:
+      - {action: ignore, from: EGL_NO_DISPLAY}
+      - {action: ignore, from: EGL_NO_SURFACE}
+      - {action: ignore, from: EGL_NO_CONTEXT}
+      - {action: ignore, from: EGL_DEFAULT_DISPLAY}
       - {transform: lower}
     private:
       - {transform: unexport}

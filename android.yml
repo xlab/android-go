@@ -20,7 +20,7 @@ GENERATOR:
     - android/native_window_jni.h
     - android/obb.h
     - android/rect.h
-    # - android/sensor.h
+    - android/sensor.h
     - android/storage_manager.h
     - android/tts.h
     - android/window.h
@@ -54,7 +54,7 @@ PARSER:
     - native_window_jni.h
     - obb.h
     - rect.h
-    # - sensor.h
+    - sensor.h
     - storage_manager.h
     - tts.h
     - window.h
@@ -88,6 +88,7 @@ TRANSLATOR:
       - {action: ignore, from: JNI_OnLoad}
       - {action: ignore, from: JNI_OnUnload}
       - {action: ignore, from: ANativeActivity_onCreate}
+      - {action: ignore, from: ASensorManager_getSensorList}
     type:
       - {action: accept, from: ^J}
       - {action: accept, from: jobject$}
