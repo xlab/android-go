@@ -1,4 +1,4 @@
-android-go [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/xlab/android-go/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+android-go [![Go Report Card](https://goreportcard.com/badge/github.com/xlab/android-go)](https://goreportcard.com/report/github.com/xlab/android-go)
 ==========
 
 The **android-go** project aims to provide a platform (namely an SDK) for
