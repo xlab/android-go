@@ -1,4 +1,6 @@
-android-go [![Go Report Card](https://goreportcard.com/badge/github.com/xlab/android-go)](https://goreportcard.com/report/github.com/xlab/android-go)
+android-go [![Go Report Card](https://goreportcard.com/badge/github.com/xlab/android-go)](https://goreportcard.com/report/github.com/xlab/android-go) ![Lines of Code](https://img.shields.io/badge/lines-7K-blue.svg])
+
+
 ==========
 
 The **android-go** project aims to provide a platform (namely an SDK) for
