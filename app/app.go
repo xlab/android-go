@@ -1,5 +1,7 @@
-// +build android
-
+// Package app implements a NativeActivity glue layer required to
+// properly handle the startup process and the native activity events.
+//
+// Import this package into your Go application to make it Android-compatible.
 package app
 
 // #cgo LDFLAGS: -llog

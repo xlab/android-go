@@ -1,5 +1,3 @@
-// +build android
-
 package app
 
 // #cgo LDFLAGS: -landroid
