@@ -1,13 +1,13 @@
 ANDROID_TOOLCHAIN_DIR ?= $(shell pwd)/toolchain
-ANDROID_PLATFORM ?= android-21
-ANDROID_SYSROOT = $(NDK)/platforms/$(ANDROID_PLATFORM)/arch-arm
+ANDROID_API ?= 21
+ANDROID_SYSROOT = $(NDK)/platforms/android-$(ANDROID_API)/arch-arm
 
 all: toolchain build apk
 
 toolchain:
-	$(NDK)/build/tools/make-standalone-toolchain.sh \
-		--platform=$(ANDROID_PLATFORM) --install-dir=$(ANDROID_TOOLCHAIN_DIR) \
-		--arch=arm
+	$(NDK)/build/tools/make_standalone_toolchain.py \
+		--api=$(ANDROID_API) --install-dir=$(ANDROID_TOOLCHAIN_DIR) \
+		--arch=arm --stl libc++
 
 build:
 	mkdir -p android/jni/lib
