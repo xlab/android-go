@@ -35,7 +35,7 @@ func onCreate(activity *C.ANativeActivity) {
 	defaultApp.initWG.Wait()
 
 	event := LifecycleEvent{
-		Activity: android.NewNativeActivityRef(activity),
+		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
 		Kind:     OnCreate,
 	}
 	defaultApp.lifecycleEvents <- event
@@ -46,7 +46,7 @@ func onDestroy(activity *C.ANativeActivity) {
 	defaultApp.initWG.Wait()
 
 	event := LifecycleEvent{
-		Activity: android.NewNativeActivityRef(activity),
+		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
 		Kind:     OnDestroy,
 	}
 	defaultApp.lifecycleEvents <- event
@@ -57,7 +57,7 @@ func onStart(activity *C.ANativeActivity) {
 	defaultApp.initWG.Wait()
 
 	event := LifecycleEvent{
-		Activity: android.NewNativeActivityRef(activity),
+		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
 		Kind:     OnStart,
 	}
 	defaultApp.lifecycleEvents <- event
@@ -68,7 +68,7 @@ func onStop(activity *C.ANativeActivity) {
 	defaultApp.initWG.Wait()
 
 	event := LifecycleEvent{
-		Activity: android.NewNativeActivityRef(activity),
+		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
 		Kind:     OnStop,
 	}
 	defaultApp.lifecycleEvents <- event
@@ -79,7 +79,7 @@ func onPause(activity *C.ANativeActivity) {
 	defaultApp.initWG.Wait()
 
 	event := LifecycleEvent{
-		Activity: android.NewNativeActivityRef(activity),
+		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
 		Kind:     OnPause,
 	}
 	defaultApp.lifecycleEvents <- event
@@ -90,7 +90,7 @@ func onResume(activity *C.ANativeActivity) {
 	defaultApp.initWG.Wait()
 
 	event := LifecycleEvent{
-		Activity: android.NewNativeActivityRef(activity),
+		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
 		Kind:     OnResume,
 	}
 	defaultApp.lifecycleEvents <- event
@@ -107,7 +107,7 @@ func onSaveInstanceState(activity *C.ANativeActivity, outSize *C.size_t) unsafe.
 	if fn == nil {
 		return nil
 	}
-	activityRef := android.NewNativeActivityRef(activity)
+	activityRef := android.NewNativeActivityRef(unsafe.Pointer(activity))
 	result := fn(activityRef, (*uint32)(outSize))
 	return result
 }
@@ -126,7 +126,7 @@ func onWindowFocusChanged(activity *C.ANativeActivity, hasFocus int) {
 		return
 	}
 	event := WindowFocusEvent{
-		Activity: android.NewNativeActivityRef(activity),
+		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
 		HasFocus: hasFocus > 0,
 	}
 	select {
@@ -160,7 +160,7 @@ func onNativeWindowCreated(activity *C.ANativeActivity, window *C.ANativeWindow)
 		return
 	}
 	event := NativeWindowEvent{
-		Activity: android.NewNativeActivityRef(activity),
+		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
 		Window:   (*android.NativeWindow)(window),
 		Kind:     NativeWindowCreated,
 	}
@@ -181,7 +181,7 @@ func onNativeWindowRedrawNeeded(activity *C.ANativeActivity, window *C.ANativeWi
 		return
 	}
 	event := NativeWindowEvent{
-		Activity: android.NewNativeActivityRef(activity),
+		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
 		Window:   (*android.NativeWindow)(window),
 		Kind:     NativeWindowRedrawNeeded,
 	}
@@ -216,7 +216,7 @@ func onNativeWindowDestroyed(activity *C.ANativeActivity, window *C.ANativeWindo
 		return
 	}
 	event := NativeWindowEvent{
-		Activity: android.NewNativeActivityRef(activity),
+		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
 		Window:   (*android.NativeWindow)(window),
 		Kind:     NativeWindowDestroyed,
 	}
@@ -250,7 +250,7 @@ func onInputQueueCreated(activity *C.ANativeActivity, queue *C.AInputQueue) {
 		return
 	}
 	event := InputQueueEvent{
-		Activity: android.NewNativeActivityRef(activity),
+		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
 		Queue:    (*android.InputQueue)(queue),
 		Kind:     QueueCreated,
 	}
@@ -273,7 +273,7 @@ func onInputQueueDestroyed(activity *C.ANativeActivity, queue *C.AInputQueue) {
 		return
 	}
 	event := InputQueueEvent{
-		Activity: android.NewNativeActivityRef(activity),
+		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
 		Queue:    (*android.InputQueue)(queue),
 		Kind:     QueueDestroyed,
 	}
@@ -301,8 +301,8 @@ func onContentRectChanged(activity *C.ANativeActivity, rect *C.ARect) {
 		return
 	}
 	event := ContentRectEvent{
-		Activity: android.NewNativeActivityRef(activity),
-		Rect:     android.NewRectRef(rect),
+		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
+		Rect:     android.NewRectRef(unsafe.Pointer(rect)),
 	}
 	select {
 	case out <- event:
@@ -333,7 +333,7 @@ func onConfigurationChanged(activity *C.ANativeActivity) {
 		return
 	}
 	event := ActivityEvent{
-		Activity: android.NewNativeActivityRef(activity),
+		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
 		Kind:     OnConfigurationChanged,
 	}
 	select {
@@ -353,7 +353,7 @@ func onLowMemory(activity *C.ANativeActivity) {
 		return
 	}
 	event := ActivityEvent{
-		Activity: android.NewNativeActivityRef(activity),
+		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
 		Kind:     OnLowMemory,
 	}
 	select {
