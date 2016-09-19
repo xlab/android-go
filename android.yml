@@ -76,10 +76,7 @@ TRANSLATOR:
       - {action: accept, from: ^android_Log}
       - {action: replace, from: ^android_Log, to: Log}
       - {action: replace, from: "(?i)^Android"}
-      # Markov algorithm replace-fu for geting rid of ANames and AAliases.
-      - {action: replace, from: "^AA", to: xA}
       - {action: replace, from: ^A}
-      - {action: replace, from: ^xA, to: A}
     function:
       - {action: accept, from: ^__android_log_write}
       - {action: replace, from: ^__android}
