@@ -147,4 +147,4 @@ Android that are not limited. Follow me at [@xlab_dev](https://twitter.com/xlab_
 
 ## License
 
-All the code except when stated otherwise is licensed under the MIT license.
+All the code except when stated otherwise is licensed under the [MIT license](/LICENSE.txt).
