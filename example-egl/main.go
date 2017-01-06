@@ -109,14 +109,14 @@ func main() {
 }
 
 func initGL() {
-	gl.Hint(gl.PerspectiveCorrectionHint, gl.Fastest)
-	gl.Enable(gl.CullFace)
-	gl.Disable(gl.DepthTest)
-	gl.SetShadeModel(gl.Smooth)
+	gl.Hint(gl.PERSPECTIVE_CORRECTION_HINT, gl.FASTEST)
+	gl.Enable(gl.CULL_FACE)
+	gl.Disable(gl.DEPTH_TEST)
+	gl.ShadeModel(gl.SMOOTH)
 }
 
 func draw(handle *DisplayHandle, x, y, z float32) {
 	gl.ClearColor(x, y, z, 1)
-	gl.ClearFunc(gl.ColorBufferBit)
+	gl.Clear(gl.COLOR_BUFFER_BIT)
 	egl.SwapBuffers(handle.display, handle.surface)
 }

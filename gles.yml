@@ -34,34 +34,16 @@ TRANSLATOR:
     function:
       - {action: accept, from: ^gl}
       - {action: replace, from: ^gl}
-      #  avoid collision with param constants
-      - {action: replace, from: LineWidth$, to: "SetLineWidth"}
-      - {action: replace, from: PointSize$, to: "SetPointSize"}
-      - {action: replace, from: ActiveTexture$, to: "SetActiveTexture"}
-      - {action: replace, from: Clear$, to: "ClearFunc"}
-      - {action: replace, from: ClientActiveTexture$, to: "SetClientActiveTexture"}
-      - {action: replace, from: CullFace$, to: "SetCullFace"}
-      - {action: replace, from: DepthFunc$, to: "SetDepthFunc"}
-      - {action: replace, from: FrontFace$, to: "SetFrontFace"}
-      - {action: replace, from: MatrixMode$, to: "SetMatrixMode"}
-      - {action: replace, from: SampleCoverage$, to: "SetSampleCoverage"}
-      - {action: replace, from: ShadeModel$, to: "SetShadeModel"}
-      - {action: replace, from: StencilFunc$, to: "SetStencilFunc"}
-      - {action: replace, from: Viewport$, to: "SetViewport"}
+      - {transform: export}
     type:
       - {action: replace, from: "_t$"}
-    const:
-      - {action: replace, from: FLOAT$, to: FLOAT_TYPE}
-      - {action: replace, from: BYTE$, to: BYTE_TYPE}
-      - {action: replace, from: SHORT$, to: SHORT_TYPE}
-      - {action: replace, from: FIXED$, to: FIXED_TYPE}
-      - {transform: lower}
-    private:
-      - {transform: unexport}
-    post-global:
-      - {action: doc, from: "^gl",
-              to: "https://www.khronos.org/opengles/sdk/docs/man/xhtml/$name.xml"}
       - {transform: export}
       - {load: snakecase}
-
-
+    const:
+      - {action: replace, from: "^_"}
+    private:
+      - {transform: unexport}
+      - {load: snakecase}
+    post-global:
+      - {action: doc, from: "^gl",
+              to: "https://www.khronos.org/opengles/sdk/1.1/docs/man/$name.xml"}

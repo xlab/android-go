@@ -37,7 +37,11 @@ TRANSLATOR:
       - {target: ^glGetProgramInfoLog$, tips: [0,size,ref,arr]}
       - {target: ^glGetShaderPrecisionFormat$, tips: [0,0,arr,ref]}
       - {target: ^glGetVertexAttribPointerv$, tips: [0,0,ref]}
-      - {target: ^glUniformMatrix4fv$, tips: [0,0,0,ref]}
+      # parameter at the end:
+      - {target: ^glUniformMatrix, tips: [0,0,0,ref]}
+      - {target: iv$, tips: [0,0,ref]}
+      - {target: fv$, tips: [0,0,ref]}
+      
   TypeTips:
     function:
       # do not stick with GL types, use Go types for API instead
@@ -50,36 +54,16 @@ TRANSLATOR:
     function:
       - {action: accept, from: ^gl}
       - {action: replace, from: ^gl}
-      #  avoid collision with param constants
-      - {action: replace, from: ActiveTexture$, to: "SetActiveTexture"}
-      - {action: replace, from: BlendColor$, to: "SetBlendColor"}
-      - {action: replace, from: BlendEquation$, to: "SetBlendEquation"}
-      - {action: replace, from: CullFace$, to: "SetCullFace"}
-      - {action: replace, from: DepthFunc$, to: "SetDepthFunc"}
-      - {action: replace, from: FrontFace$, to: "SetFrontFace"}
-      - {action: replace, from: LineWidth$, to: "SetLineWidth"}
-      - {action: replace, from: SampleCoverage$, to: "SetSampleCoverage"}
-      - {action: replace, from: StencilFunc$, to: "SetStencilFunc"}
-      - {action: replace, from: Viewport$, to: "SetViewport"}
-      - {action: replace, from: ReadBuffer$, to: "SetReadBuffer"}
-      - {action: replace, from: TransformFeedbackVaryings$, to: "SetTransformFeedbackVaryings"}
-      - {action: replace, from: UniformBlockBinding$, to: "SetUniformBlockBinding"}
-  
+      - {transform: export}
     type:
       - {action: replace, from: "_t$"}
+      - {transform: export}
+      - {load: snakecase}
     const:
-      - {action: replace, from: FLOAT$, to: FLOAT_TYPE}
-      - {action: replace, from: BYTE$, to: BYTE_TYPE}
-      - {action: replace, from: SHORT$, to: SHORT_TYPE}
-      - {action: replace, from: FIXED$, to: FIXED_TYPE}
-      - {action: replace, from: INT$, to: INT_TYPE}
-      - {transform: lower}
+      - {action: replace, from: "^_"}
     private:
       - {transform: unexport}
+      - {load: snakecase}
     post-global:
       - {action: doc, from: "^gl",
               to: "https://www.khronos.org/opengles/sdk/docs/man3/html/$name.xhtml"}
-      - {transform: export}
-      - {load: snakecase}
-
-
