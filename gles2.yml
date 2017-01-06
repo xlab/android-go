@@ -37,6 +37,8 @@ TRANSLATOR:
       - {target: ^glGetProgramInfoLog$, tips: [0,size,ref,arr]}
       - {target: ^glGetShaderPrecisionFormat$, tips: [0,0,arr,ref]}
       - {target: ^glGetVertexAttribPointerv$, tips: [0,0,ref]}
+      - {target: ^glUniformMatrix4fv$, tips: [0,0,0,ref]}
+      
   TypeTips:
     function:
       - {target: ^glBindAttribLocation$, tips: [0,0,plain]}
