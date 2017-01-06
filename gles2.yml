@@ -38,19 +38,11 @@ TRANSLATOR:
       - {target: ^glGetShaderPrecisionFormat$, tips: [0,0,arr,ref]}
       - {target: ^glGetVertexAttribPointerv$, tips: [0,0,ref]}
       - {target: ^glUniformMatrix4fv$, tips: [0,0,0,ref]}
-      
   TypeTips:
     function:
-      - {target: ^glBindAttribLocation$, tips: [0,0,plain]}
-      - {target: ^glGetAttribLocation$, tips: [0,plain]}
-      - {target: ^glGetUniformLocation$, tips: [0,plain]}
-      - {target: ^glGetProgramInfoLog$, tips: [0,0,0,plain]}
-      - {target: ^glGetShaderInfoLog$, tips: [0,0,0,plain]}
-      - {target: ^glGetShaderSource$, tips: [0,0,0,plain]}
-      - {target: ^glGetActiveAttrib$, tips: [0,0,0,0,0,0,plain]}
-      - {target: ^glGetActiveUniform$, tips: [0,0,0,0,0,0,plain]}
-      - {target: ^glShaderSource$, tips: [0,0,plain,0]}
-      - {target: ^glGetString$, self: plain}
+      # do not stick with GL types, use Go types for API instead
+      - {target: ., self: plain, tips: [plain,plain,plain,plain,plain,plain,plain,plain,plain]}
+      
   Rules: 
     global:
       - {action: accept, from: "^GL"}

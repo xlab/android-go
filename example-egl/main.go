@@ -116,7 +116,7 @@ func initGL() {
 }
 
 func draw(handle *DisplayHandle, x, y, z float32) {
-	gl.ClearColor(gl.Clampf(x), gl.Clampf(y), gl.Clampf(z), 1)
+	gl.ClearColor(x, y, z, 1)
 	gl.ClearFunc(gl.ColorBufferBit)
 	egl.SwapBuffers(handle.display, handle.surface)
 }

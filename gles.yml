@@ -25,7 +25,8 @@ TRANSLATOR:
     enum: expand
   TypeTips:
     function:
-      - {target: ^glGetString$, self: plain}
+      # do not stick with GL types, use Go types for API instead
+      - {target: ., self: plain, tips: [plain,plain,plain,plain,plain,plain,plain,plain,plain]}
   Rules: 
     global:
       - {action: accept, from: "^GL"}
