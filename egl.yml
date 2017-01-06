@@ -32,7 +32,13 @@ TRANSLATOR:
       - {target: ^eglCreatePbufferSurface$, tips: [0,0,arr]}
       - {target: ^eglCreatePixmapSurface$, tips: [0,0,0,arr]}
       - {target: ^eglCreatePbufferFromClientBuffer$, tips: [0,0,0,0,arr]}
+      - {target: ^eglCreateContext$, tips: [0,0,0,arr]}
       - {target: ^egl, tips: [ref,ref,ref,ref]} # covers the rest
+  TypeTips:
+    type:
+      - {target: EGLint$, self: plain}
+    function:
+      - {target: ^eglGetError$, self: plain}
   Rules: 
     global:
       - {action: accept, from: "^EGL"}

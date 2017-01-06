@@ -38,7 +38,7 @@ func NewDisplayHandle(activity *android.NativeActivity,
 	// Here specify the attributes of the desired configuration.
 	// Below, we select an egl.Config with at least 8 bits per color
 	// component compatible with on-screen windows
-	attribs := []egl.Int{
+	attribs := []int32{
 		egl.SurfaceType, egl.WindowBit,
 		egl.BlueSize, 8,
 		egl.GreenSize, 8,
@@ -55,7 +55,7 @@ func NewDisplayHandle(activity *android.NativeActivity,
 	// sample, we have a very simplified selection process, where we pick
 	// the first egl.Config that matches our criteria
 	configs := make([]egl.Config, 1)
-	var numConfigs egl.Int
+	var numConfigs int32
 	if egl.ChooseConfig(display, attribs, configs, 1, &numConfigs) == egl.False {
 		egl.Terminate(display)
 		err := fmt.Errorf("eglChooseConfig failed: %v", egl.Error())
@@ -66,7 +66,7 @@ func NewDisplayHandle(activity *android.NativeActivity,
 	// guaranteed to be accepted by android.NativeWindowSetBuffersGeometry().
 	// As soon as we picked a egl.Config, we can safely reconfigure the
 	// NativeWindow buffers to match, using egl.NativeVisualId.
-	var format egl.Int
+	var format int32
 	if egl.GetConfigAttrib(display, configs[0], egl.NativeVisualId, &format) == egl.False {
 		egl.Terminate(display)
 		err := fmt.Errorf("eglGetConfigAttrib failed: %v", egl.Error())
@@ -94,7 +94,7 @@ func NewDisplayHandle(activity *android.NativeActivity,
 }
 
 func (d *DisplayHandle) UpdateDimensions() {
-	var width, height egl.Int
+	var width, height int32
 	egl.QuerySurface(d.display, d.surface, egl.Width, &width)
 	egl.QuerySurface(d.display, d.surface, egl.Height, &height)
 	d.Width = int(width)
