@@ -23,7 +23,7 @@ func main() {
 	windowFocusEvents := make(chan app.WindowFocusEvent, 1)
 	inputQueueEvents := make(chan app.InputQueueEvent, 1)
 	inputQueueChan := make(chan *android.InputQueue, 1)
-	var displayHandle *DisplayHandle
+	var displayHandle *egl.DisplayHandle
 	var windowFocused bool
 
 	type vec3 struct {
@@ -93,7 +93,13 @@ func main() {
 					draw(displayHandle, stateX, stateY, stateZ)
 					a.NativeWindowRedrawDone()
 				case app.NativeWindowCreated:
-					if handle, err := NewDisplayHandle(event.Activity, event.Window); err != nil {
+					expectedSurface := map[int32]int32{
+						egl.SurfaceType: egl.WindowBit,
+						egl.RedSize:     8,
+						egl.GreenSize:   8,
+						egl.BlueSize:    8,
+					}
+					if handle, err := egl.NewDisplayHandle(event.Window, expectedSurface); err != nil {
 						log.Fatalln("EGL error:", err)
 					} else {
 						displayHandle = handle
@@ -115,8 +121,8 @@ func initGL() {
 	gl.ShadeModel(gl.SMOOTH)
 }
 
-func draw(handle *DisplayHandle, x, y, z float32) {
+func draw(handle *egl.DisplayHandle, x, y, z float32) {
 	gl.ClearColor(x, y, z, 1)
 	gl.Clear(gl.COLOR_BUFFER_BIT)
-	egl.SwapBuffers(handle.display, handle.surface)
+	handle.SwapBuffers()
 }
