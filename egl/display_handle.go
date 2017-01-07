@@ -111,9 +111,11 @@ func NewDisplayHandle(window *android.NativeWindow, expectedConfig map[int32]int
 	android.NativeWindowSetBuffersGeometry(window, 0, 0, format)
 	windowPtr := NativeWindowType(unsafe.Pointer(window))
 	surface := CreateWindowSurface(display, configs[foundConfig], windowPtr, nil)
-	context := CreateContext(display, configs[foundConfig], NoContext, []int32{
-		ContextClientVersion, 3.0, None, // create GL ES 3.0 context
-	})
+	var ctxRequest []int32
+	if ctxVer := expectedConfig[ContextClientVersion]; ctxVer > 0 {
+		ctxRequest = []int32{ContextClientVersion, ctxVer, None}
+	}
+	context := CreateContext(display, configs[foundConfig], NoContext, ctxRequest)
 	if MakeCurrent(display, surface, surface, context) == False {
 		DestroyContext(display, context)
 		DestroySurface(display, surface)
