@@ -25,7 +25,7 @@ This package allows to write code that works directly with NDK API, bypassing
 all the CGO bookkeeping and boilerplate bloat in your code. But safety is
 strictly advised.
 
-**Example usages:** [app/queue.go], [example], [example-egl], [nk-android]
+**Example usages:** [app/queue.go], [example], [example-egl], [nk-android].
 
 [app/queue.go]: https://github.com/xlab/android-go/blob/master/app/queue.go
 [android/sensors.go]: https://github.com/xlab/android-go/blob/master/android/sensors.go
@@ -39,7 +39,7 @@ for a proper `main.main` trampoline have been borrowed from gomobile, the
 absolute minimum to get this stuff invokable as a native activity. Most of the
 code in this package provides wrappers around NativeActivity event callbacks.
 
-**Example usages:** [example], [example-egl], [nk-android]
+**Example usages:** [example], [example-egl], [nk-android].
 
 [example]: https://github.com/xlab/android-go/tree/master/example
 [example-egl]: https://github.com/xlab/android-go/tree/master/example-egl
@@ -53,7 +53,7 @@ Khronos documentation. Some files, like [egl/errors.go] for example, have been
 written by hand to expose some features that would make it more idiomatic in the
 Go world.
 
-Examples of usage in conjuction with the **android** package: [example-egl], [nk-android].
+Examples of usage in conjuction with the **android** package: [example-egl], [nk-android] (as a Nuklear backend).
 
 [egl/errors.go]: https://github.com/xlab/android-go/blob/master/egl/errors.go
 
@@ -115,10 +115,10 @@ And recently I took [nuklear] package and implemented a few backends in Go,
 including two for Android that initialize OpenGL ES 2 or ES 3 context using
 **android**, **egl**, **gles2** and **gles3** packages. They also responsible
 for handling touch and other input events. So now it is possible to create GUI
-apps for Android, see [nk-example] for an example Nuklear GUI app.
+apps for Android, see [nk-android] for an example Nuklear GUI app.
 
 [nuklear]: http://github.com/golang-ui/nuklear
-[nk-example]: https://github.com/golang-ui/nuklear/tree/master/cmd/nk-android
+[nk-android]: https://github.com/golang-ui/nuklear/tree/master/cmd/nk-android
 
 [![Nuklear GUI App written in Golang runs on Android](https://img.youtube.com/vi/3-MiceegZlM/0.jpg)](https://www.youtube.com/watch?v=3-MiceegZlM)
 
