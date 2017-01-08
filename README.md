@@ -91,21 +91,32 @@ reference to the offical documentation. The OpenGL ES computing API is supported
 
 Refer the example links to get more info about them.
 
-There are two beautiful examples. The first [example] is a template showing how
-to create and build an application using the absolute minimum of code and
+There are three examples. The first [example] is a template app showing how
+to create and build an Android application using the absolute minimum of code and
 boilerplate. It also shows the primitives of an activity and how to handle
-activity events, there is no visual part, so be ready to read the lines in the
-ADB Shell. If this one works correctly on your device, my congratulations. If
+activity events, there is no visual part, so be ready to read the lines from the
+ADB logcat. If this one works correctly on your device, my congratulations. If
 not, please open an issue.
 
-And [example-egl] leverages all three packages together: **android**, **egl**
-and of course **gles** to create quite a rich app that animates its color based
+The [example-egl] leverages all three packages together: **android**, **egl**
+and of course **gles** (OpenGL ES 1.0) to create an visual app that animates its color based
 on the accelerometer values. It also reads input events such as key events and
 multitouch motion events (with pressure, if supported by the device), you can
-check these events in the ADB Shell. Check out the video of the expected
+check these events in the ADB logcat. Please see the video of the expected
 behaviour:
 
 [![Golang + EGL/GLES App on Android](https://img.youtube.com/vi/H2cafzATUEw/0.jpg)](https://www.youtube.com/watch?v=H2cafzATUEw)
+
+And recently I took [nuklear] package and implemented a few backends in Go,
+including two for Android that initialize OpenGL ES 2 or ES 3 context using
+**android**, **egl**, **gles2** and **gles3** packages. They also responsible
+for handling touch and other input events. So now it is possible to create GUI
+apps for Android, see [nk-example] for an example Nuklear GUI app.
+
+[nuklear]: http://github.com/golang-ui/nuklear
+[nk-example]: https://github.com/golang-ui/nuklear/tree/master/cmd/nk-android
+
+[![Nuklear GUI App written in Golang runs on Android](https://img.youtube.com/vi/3-MiceegZlM/0.jpg)](https://www.youtube.com/watch?v=3-MiceegZlM)
 
 ## On existing tools or why not just use Gomobile
 
