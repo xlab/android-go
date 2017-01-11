@@ -8,6 +8,8 @@ flexibility while keeping things simple and easy to use. The approach and tools
 are different from [gomobile](https://github.com/golang/mobile), please
 distinguish them apart.
 
+The project was one of [the best Go Newsletter items of 2016](http://golangweekly.com/issues/140). In this final issue of the year, they look back at the most popular Go news and links of 2016. 🌟
+
 ## Project structure
 
 ### android [![GoDoc](https://godoc.org/github.com/xlab/android-go/android?status.svg)](https://godoc.org/github.com/xlab/android-go/android)
@@ -23,11 +25,14 @@ features that CGO does not handle well.
 
 This package allows to write code that works directly with NDK API, bypassing
 all the CGO bookkeeping and boilerplate bloat in your code. But safety is
-strictly advised.
+strictly advised. There is also a JNI calling mechanism that allows easy interactions with
+Java VM and exposes the full potential of Android SDK! See [android/jni_util.go] for example
+of toggling Android keyboard and other JNI-based utils.
 
 **Example usages:** [app/queue.go], [example], [example-egl], [nk-android].
 
 [app/queue.go]: https://github.com/xlab/android-go/blob/master/app/queue.go
+[android/jni_util.go]: https://github.com/xlab/android-go/blob/master/android/jni_util.go
 [android/sensors.go]: https://github.com/xlab/android-go/blob/master/android/sensors.go
 
 ### app [![GoDoc](https://godoc.org/github.com/xlab/android-go/app?status.svg)](https://godoc.org/github.com/xlab/android-go/app)
@@ -121,6 +126,8 @@ apps for Android, see [nk-android] for an example Nuklear GUI app.
 [nk-android]: https://github.com/golang-ui/nuklear/tree/master/cmd/nk-android
 
 [![Nuklear GUI App written in Golang runs on Android](https://img.youtube.com/vi/3-MiceegZlM/0.jpg)](https://www.youtube.com/watch?v=3-MiceegZlM)
+
+Android keyboard toggling [video](https://goo.gl/photos/TFkYFKC48Re6RnbUA).
 
 ## On existing tools or why not just use Gomobile
 
