@@ -88,6 +88,7 @@ TRANSLATOR:
       - {target: _DefineClass$, tips: [ref,arr,0,arr,size]}
       - {target: ^JNIEnv_CallNonvirtual, tips: [ref,0,0,0,arr]}
       - {target: ^JNIEnv_Call, tips: [ref,0,0,arr]}
+      - {target: ^JNIEnv_NewObject, tips: [ref,ref,0,arr]}
       - {target: ".", tips: [sref,sref,sref,sref,sref]} # ref by default for all
       
   Rules: 
