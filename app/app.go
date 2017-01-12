@@ -16,6 +16,7 @@ import (
 	"time"
 	"unsafe"
 
+	"github.com/xlab/android-go/android"
 	"github.com/xlab/android-go/app/internal/callfn"
 )
 
@@ -53,6 +54,7 @@ type NativeActivity interface {
 	InitDone()
 	NativeWindowRedrawDone()
 	InputQueueHandled()
+	NativeActivity() *android.NativeActivity
 	LifecycleEvents() <-chan LifecycleEvent
 	HandleSaveInstanceState(fn SaveStateFunc)
 	HandleWindowFocusEvents(out chan<- WindowFocusEvent)
@@ -83,6 +85,9 @@ func Main(fn func(app NativeActivity)) {
 }
 
 type nativeActivity struct {
+	// activity holds the reference to NativeActivity passed to us in the onCreate callback.
+	activity *android.NativeActivity
+
 	// lifecycleEvents must be handled in real-time.
 	lifecycleEvents chan LifecycleEvent
 
@@ -108,6 +113,13 @@ type nativeActivity struct {
 
 func (a *nativeActivity) InitDone() {
 	a.initWG.Done()
+}
+
+func (a *nativeActivity) NativeActivity() *android.NativeActivity {
+	a.mux.RLock()
+	activity := a.activity
+	a.mux.RUnlock()
+	return activity
 }
 
 func (a *nativeActivity) LifecycleEvents() <-chan LifecycleEvent {

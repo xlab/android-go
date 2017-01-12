@@ -34,8 +34,12 @@ const (
 func onCreate(activity *C.ANativeActivity) {
 	defaultApp.initWG.Wait()
 
+	defaultApp.mux.Lock()
+	defaultApp.activity = android.NewNativeActivityRef(unsafe.Pointer(activity))
+	defaultApp.mux.Unlock()
+
 	event := LifecycleEvent{
-		Activity: android.NewNativeActivityRef(unsafe.Pointer(activity)),
+		Activity: defaultApp.activity,
 		Kind:     OnCreate,
 	}
 	defaultApp.lifecycleEvents <- event
