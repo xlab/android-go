@@ -3,22 +3,22 @@ CPP = $(shell ndk-which cpp)
 all: gen-android gen-egl gen-gles gen-gles2 gen-gles3 gen-gles31
 
 gen-android:
-	CPP="$(CPP)" cgogen -ccdefs=true android.yml
+	CPP="$(CPP)" c-for-go -ccdefs=true android.yml
 
 gen-egl:
-	cgogen egl.yml
+	c-for-go egl.yml
 
 gen-gles:
-	cgogen gles.yml
+	c-for-go gles.yml
 
 gen-gles2:
-	cgogen gles2.yml
+	c-for-go gles2.yml
 
 gen-gles3:
-	cgogen gles3.yml
+	c-for-go gles3.yml
 
 gen-gles31:
-	cgogen gles31.yml
+	c-for-go gles31.yml
 
 clean: clean-egl clean-gles clean-gles2 clean-gles3 clean-gles31
 	rm -f android/cgo_helpers.go android/cgo_helpers.h android/cgo_helpers.c
