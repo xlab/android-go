@@ -7,7 +7,7 @@ This is a simple Android Go app template.
 
 ### Prerequisites
 
-* Install the latest Android SDK.
+* Install the latest Android SDK (UPD March 2017: supported SDK Tools versions prior to 25.3.0 as they [dropped android tool support](https://developer.android.com/studio/releases/sdk-tools.html) in that release).
 
 * Install the desired Android NDK platforms.
 
