@@ -9,11 +9,11 @@ install:
 	ant debug install
 
 project:
-	# (optional) android list targets
-	android update project --target android-23 --name EGLActivity --path .
+	# (required) go get github.com/xlab/android-go/cmd/android-project
+	android-project update --target android-23 --name EGLActivity --path .
 
 project-n:
-	android update project --target android-N --name EGLActivity --path .
+	android-project update --target android-N --name EGLActivity --path .
 
 clean:
 	rm -rf libs obj bin gen jni/lib
