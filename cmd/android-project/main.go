@@ -142,7 +142,7 @@ func learnPaths(sdkDir string) (ndkDir, platformsDir string) {
 	}
 	ndkDir = filepath.Join(sdkDir, "ndk-bundle")
 	if _, err := os.Stat(sdkDir); err != nil {
-		closer.Fatalln("Android SDK location is provided but has no ndk-bundle:", ndkDir)
+		log.Println("WARN: Android SDK location is provided but has no ndk-bundle:", ndkDir)
 	}
 	platformsDir = filepath.Join(sdkDir, "platforms")
 	if _, err := os.Stat(sdkDir); err != nil {

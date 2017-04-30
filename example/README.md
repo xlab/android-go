@@ -7,13 +7,15 @@ This is a simple Android Go app template.
 
 ### Prerequisites
 
-* Install the latest Android SDK (UPD March 2017: supported SDK Tools versions prior to 25.3.0 as they [dropped android tool support](https://developer.android.com/studio/releases/sdk-tools.html) in that release).
+* Install the latest Android SDK.
 
 * Install the desired Android NDK platforms.
 
 * Install the [Apache Ant](http://ant.apache.org) tool (`$ brew install ant` on OS X).
 
-* Make sure you have the `$NDK` environment variable set to the NDK root, an example root may look like:
+* Make sure you have the `$ANDROID_HOME` environment variable set to the Android SDK root.
+
+* Make sure you have the `$NDK` environment variable set to the Android NDK root, an example root may look like:
 
 ```
 $ ls $NDK
@@ -25,7 +27,7 @@ ndk-build*         ndk-stack*         platforms/         shader-tools/      tool
 
 * Make sure you have this dir added to the `$PATH` so `ndk-which` and `ndk-build` are available by their names.
 
-* Make sure you have added the `/sdk/tools` dir to your `$PATH` too, so the `android` tool is available by its name.
+* Make sure you have added the `/sdk/tools` dir to your `$PATH` too, so the `android` tool is available by its name. **Upd April 2017** you have to get [android-project](https://github.com/xlab/android-go/tree/master/cmd/android-project) tool instead, as they dropped `android` tool support in latest SDK versions.
 
 * Make sure you have `adb` available by its name and it connects to the device with no issues.
 
