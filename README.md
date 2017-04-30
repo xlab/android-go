@@ -10,6 +10,8 @@ distinguish them apart.
 
 The project was one of [the best Go Newsletter items of 2016](http://golangweekly.com/issues/140). In this final issue of the year, they look back at the most popular Go news and links of 2016. 🌟
 
+❗️Important! Please see [cmd/android-project](/cmd/android-project) utility that replaces the original `android` from SDK that has been stripped in latest SDK releases. All example Makefiles were updated, I advise you to do the same rather than stick to old SDK versions.
+
 ## Project structure
 
 ### android [![GoDoc](https://godoc.org/github.com/xlab/android-go/android?status.svg)](https://godoc.org/github.com/xlab/android-go/android)
@@ -34,6 +36,14 @@ of toggling Android keyboard and other JNI-based utils.
 [app/queue.go]: https://github.com/xlab/android-go/blob/master/app/queue.go
 [android/jni_util.go]: https://github.com/xlab/android-go/blob/master/android/jni_util.go
 [android/sensors.go]: https://github.com/xlab/android-go/blob/master/android/sensors.go
+
+### cmd/android-project
+
+Tool **android-project** is a simple replacement for infamous `android` util from Android SDK, prior to Android SDK Tools [Revision 25.3.0 (March 2017) release](https://developer.android.com/studio/releases/sdk-tools.html) when they dropped that util abruptly and got back a stripped version later. Needs to be installed first:
+
+```
+go get github.com/xlab/android-go/cmd/android-project
+```
 
 ### app [![GoDoc](https://godoc.org/github.com/xlab/android-go/app?status.svg)](https://godoc.org/github.com/xlab/android-go/app)
 
