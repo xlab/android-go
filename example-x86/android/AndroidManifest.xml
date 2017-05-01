@@ -1,0 +1,20 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="org.golang.android.example"
+        android:versionCode="1"
+        android:versionName="1.0">
+
+    <uses-sdk android:minSdkVersion="21" />
+
+    <application android:label="GolangExample" android:hasCode="false">
+        <activity android:name="android.app.NativeActivity"
+                android:label="GolangExample"
+                android:configChanges="orientation|keyboardHidden">
+            <meta-data android:name="android.app.lib_name" android:value="example" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
