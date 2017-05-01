@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"runtime"
 
 	"github.com/xlab/android-go/app"
 )
@@ -12,6 +13,7 @@ func init() {
 
 func main() {
 	log.Println("NativeActivity has started ^_^")
+	log.Printf("Platform: %s %s", runtime.GOOS, runtime.GOARCH)
 	nativeWindowEvents := make(chan app.NativeWindowEvent)
 
 	app.Main(func(a app.NativeActivity) {
