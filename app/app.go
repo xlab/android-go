@@ -11,6 +11,8 @@ package app
 import "C"
 
 import (
+	"bytes"
+	"fmt"
 	"os"
 	"sync"
 	"time"
@@ -62,6 +64,7 @@ type NativeActivity interface {
 	HandleInputQueueEvents(out chan<- InputQueueEvent)
 	HandleContentRectEvents(out chan<- ContentRectEvent)
 	HandleActivityEvents(out chan<- ActivityEvent)
+	GetAsset(name string) ([]byte, error)
 }
 
 var defaultApp = &nativeActivity{
@@ -222,4 +225,32 @@ func (a *nativeActivity) getSaveInstanceStateFunc() SaveStateFunc {
 	fn := a.saveInstanceStateFunc
 	a.mux.RUnlock()
 	return fn
+}
+
+// GetAsset returns the asset data of the specified asset or an error. GetAsset must not be called before the onCreate event was received.
+func (a *nativeActivity) GetAsset(name string) (byt []byte, err error) {
+	a.mux.RLock()
+	var activity = a.activity
+	activity.Deref()
+	var asset = android.AssetManagerOpen(activity.AssetManager, name+"\x00", android.AssetModeStreaming)
+	if asset == nil {
+		err = os.ErrNotExist
+	} else {
+		var buf bytes.Buffer
+		for {
+			var read [1024]byte
+			var n = int(android.AssetRead(asset, unsafe.Pointer(&read[0]), uint32(len(read))))
+			if n < 0 {
+				err = fmt.Errorf("Read error %d", -n)
+				break
+			} else if n == 0 {
+				byt = buf.Bytes()
+				break
+			}
+			buf.Write(read[:n])
+		}
+		android.AssetClose(asset)
+	}
+	a.mux.RUnlock()
+	return
 }
