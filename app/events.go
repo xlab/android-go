@@ -36,6 +36,7 @@ func onCreate(activity *C.ANativeActivity) {
 
 	defaultApp.mux.Lock()
 	defaultApp.activity = android.NewNativeActivityRef(unsafe.Pointer(activity))
+	defaultApp.activity.Deref()
 	defaultApp.mux.Unlock()
 
 	event := LifecycleEvent{
