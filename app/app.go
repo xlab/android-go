@@ -12,7 +12,6 @@ import "C"
 
 import (
 	"bytes"
-	"errors"
 	"fmt"
 	"os"
 	"sync"
@@ -69,7 +68,6 @@ type NativeActivity interface {
 }
 
 var defaultApp = &nativeActivity{
-	activityMux:            new(sync.Mutex),
 	lifecycleEvents:        make(chan LifecycleEvent),
 	nativeWindowRedrawDone: make(chan Signal, 1),
 	inputQueueHandled:      make(chan Signal, 1),
@@ -91,8 +89,7 @@ func Main(fn func(app NativeActivity)) {
 
 type nativeActivity struct {
 	// activity holds the reference to NativeActivity passed to us in the onCreate callback.
-	activity    *android.NativeActivity
-	activityMux *sync.Mutex
+	activity *android.NativeActivity
 
 	// lifecycleEvents must be handled in real-time.
 	lifecycleEvents chan LifecycleEvent
@@ -230,69 +227,30 @@ func (a *nativeActivity) getSaveInstanceStateFunc() SaveStateFunc {
 	return fn
 }
 
-// GetAsset returns the asset data of the specified asset or an error.
-// GetAsset must not be called before the onCreate event was received.
-func (a *nativeActivity) GetAsset(name string) ([]byte, error) {
-	a.mux.Lock()
-	if a.activity == nil {
-		a.mux.Unlock()
-		err := errors.New("app: GetAsset must be called on initialized native activity")
-		return nil, err
-	}
-	a.activityMux.Lock()
-	defer a.activityMux.Unlock()
-	if a.activity.AssetManager == nil {
-		a.activity.Deref()
-	}
-	manager := a.activity.AssetManager
-	a.mux.Unlock()
-
-	asset := android.AssetManagerOpen(manager, safeString(name), android.AssetModeStreaming)
+// GetAsset returns the asset data of the specified asset or an error. GetAsset must not be called before the onCreate event was received.
+func (a *nativeActivity) GetAsset(name string) (byt []byte, err error) {
+	a.mux.RLock()
+	var activity = a.activity
+	activity.Deref()
+	var asset = android.AssetManagerOpen(activity.AssetManager, name+"\x00", android.AssetModeStreaming)
 	if asset == nil {
-		return nil, os.ErrNotExist
-	}
-	defer android.AssetClose(asset)
-
-	buf := new(bytes.Buffer)
-	cBuf := allocMemory(1024)
-	defer freeMemory(cBuf)
-	for {
-		n := android.AssetRead(asset, cBuf, 1024)
-		if n < 0 {
-			err := fmt.Errorf("Read error %d", -n)
-			return nil, err
-		} else if n == 0 {
-			break
+		err = os.ErrNotExist
+	} else {
+		var buf bytes.Buffer
+		for {
+			var read [1024]byte
+			var n = int(android.AssetRead(asset, unsafe.Pointer(&read[0]), uint32(len(read))))
+			if n < 0 {
+				err = fmt.Errorf("Read error %d", -n)
+				break
+			} else if n == 0 {
+				byt = buf.Bytes()
+				break
+			}
+			buf.Write(read[:n])
 		}
-		const m = 0x7fffffff
-		buf.Write((*[m]byte)(cBuf)[:n])
+		android.AssetClose(asset)
 	}
-	return buf.Bytes(), nil
-}
-
-var end = "\x00"
-var endChar byte = '\x00'
-
-func safeString(s string) string {
-	if len(s) == 0 {
-		return end
-	}
-	if s[len(s)-1] != endChar {
-		return s + end
-	}
-	return s
-}
-
-// allocMem allocates memory of size n bytes in C.
-// The caller is responsible for freeing the this memory via C.free.
-func allocMemory(n int) unsafe.Pointer {
-	mem, err := C.calloc(C.size_t(n), (C.size_t)(1))
-	if err != nil {
-		panic("memory alloc error: " + err.Error())
-	}
-	return mem
-}
-
-func freeMemory(mem unsafe.Pointer) {
-	C.free(mem)
+	a.mux.RUnlock()
+	return
 }
