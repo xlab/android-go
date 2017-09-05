@@ -1,0 +1,18 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion = 25
+    buildToolsVersion = '25.0.0'
+
+    defaultConfig {
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
+    }
+    buildTypes {
+        release
+        debug {
+            jniDebuggable true
+        }
+    }
+}
