@@ -1,0 +1,22 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion = 26
+    buildToolsVersion = '26.0.0'
+
+    defaultConfig {
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
+    }
+    buildTypes {
+        release
+        debug {
+            jniDebuggable true
+        }
+    }
+}
+
+task prepareToolchain(type:Exec) {
+    commandLine 'echo $ANDROID_HOME'
+}
