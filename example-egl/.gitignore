@@ -1,4 +1,9 @@
 .DS_Store
+.gradle
+.idea
+*.iml
+build/
+android/build
 android/bin/
 android/build.xml
 android/jni/lib/

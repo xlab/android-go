@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion = 26
-    buildToolsVersion = '26.0.0'
 
     defaultConfig {
         ndk {
@@ -17,6 +16,15 @@ android {
     }
 }
 
-task prepareToolchain(type:Exec) {
-    commandLine 'echo $ANDROID_HOME'
+task buildGoDebug(type:Exec) {
+    commandLine 'echo', 'assemble debug hi here'
+}
+
+task buildGoRelease(type:Exec) {
+    commandLine 'echo', 'assemble release hi here'
+}
+
+afterEvaluate {
+    assembleDebug.dependsOn buildGoDebug
+    assembleRelease.dependsOn buildGoRelease
 }
