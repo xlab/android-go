@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion = 26
+    compileSdkVersion = rootProject.ext.sdkVersion
 
     defaultConfig {
         ndk {
-            abiFilters 'armeabi-v7a'
+            abiFilters rootProject.ext.archs
         }
     }
     buildTypes {
@@ -17,11 +17,11 @@ android {
 }
 
 task buildGoDebug(type:Exec) {
-    commandLine 'echo', 'assemble debug hi here'
+    commandLine '../build_go.sh', 'Debug', rootProject.ext.archs
 }
 
 task buildGoRelease(type:Exec) {
-    commandLine 'echo', 'assemble release hi here'
+    commandLine '../build_go.sh', 'Release', rootProject.ext.archs
 }
 
 afterEvaluate {
