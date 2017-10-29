@@ -29,7 +29,8 @@ task prepareToolchain(type: Exec) {
 }
 
 afterEvaluate {
-    preBuild.dependsOn prepareToolchain
+    buildGoDebug.dependsOn prepareToolchain
+    buildGoRelease.dependsOn prepareToolchain
     preDebugBuild.dependsOn buildGoDebug
 //    assembleRelease.dependsOn buildGoRelease
 }

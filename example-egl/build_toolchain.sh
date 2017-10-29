@@ -31,6 +31,10 @@ set -x
 $ANDROID_HOME/ndk-bundle/build/tools/make_standalone_toolchain.py \
 		--api=$ANDROID_API --install-dir=$TOOLCHAIN_DIR \
 		--arch=$ARCH --stl libc++
+# The command above includes the wrong headers due to a bug in the android sdk and/or cmake. The following two commands fix this issue.
+rm -rf $TOOLCHAIN_DIR/sysroot/usr
+cp -r  "$ANDROID_HOME/ndk-bundle/platforms/android-$ANDROID_API/arch-arm/usr" "$TOOLCHAIN_DIR/sysroot/usr"
+
 set +x
 printf "Standalone toolchain ready\n"
 done

@@ -35,7 +35,7 @@ OUTPUT_DIR=$OUTPUT_ROOT_DIR/$ABI
 mkdir -p $OUTPUT_DIR
 
 cd ..
-CC=android/$CC CXX=android/$CXX CGO_ENABLED=1 CGO_CFLAGS=$CGO_CFLAGS GOOS=android GOARCH=$GOARCH GOARM=$GOARM \
+CC=$(pwd)/android/$CC CXX=$(pwd)/android/$CXX CGO_ENABLED=1 CGO_CFLAGS=$CGO_CFLAGS GOOS=android GOARCH=$GOARCH GOARM=$GOARM \
 go build -i -pkgdir $(pwd)/android/$OUTPUT_DIR -buildmode=c-shared -o android/src/main/jniLibs/$ABI/libgomain.so
 cd android
 
