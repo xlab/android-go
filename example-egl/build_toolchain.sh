@@ -1,4 +1,5 @@
 #!/bin/bash
+#Working directory is <project root>/android
 set -e
 
 ABIS=($(echo $1 | sed 's/,/ /g'))

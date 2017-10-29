@@ -4,6 +4,7 @@
 *.iml
 build/
 android/build
+android/build_go
 android/bin/
 android/build.xml
 android/jni/lib/

@@ -1,19 +1,42 @@
 #!/bin/bash
-set -e
+#Working directory is <project root>/android
+set -ex
 
-BUILD_MODE=$1
-ARCHS=($(echo $2 | sed 's/,/ /g'))
-ANDROID_API=$3
-BUILD_DIR=build_go
-printf "Build mode: %s\nArchitectures to build: %s\nAndroid API version %s\n" $BUILD_MODE "${ARCHS[*]}" $ANDROID_API
+ABIS=($(echo $1 | sed 's/,/ /g'))
+ANDROID_API=$2
+printf "Build Go sources using ABIs: %s Android API: %s Mode: %s\n" "${ABIS[*]}" $ANDROID_API "nomode"
 
-for ARCH in ${ARCHS[*]}
+TOOLCHAIN_ROOT_DIR=build_go/toolchain
+OUTPUT_ROOT_DIR=build_go/output
+printf "Cleaning output dir %s\n" "$OUTPUT_ROOT_DIR"
+rm -rf "$OUTPUT_ROOT_DIR"
+
+for ABI in ${ABIS[*]}
 do
-printf "Architecture: %s\n" $ARCH
+
+TOOLCHAIN_DIR="$TOOLCHAIN_ROOT_DIR/$ABI"
+
+case $ABI in
+armeabi-v7a)
+ARCH="arm"
+GOARCH=arm
+GOARM=7
+CC="$TOOLCHAIN_DIR/bin/arm-linux-androideabi-gcc"
+CXX="$TOOLCHAIN_DIR/bin/arm-linux-androideabi-g++"
+CGO_CFLAGS="-march=armv7-a"
+;;
+x86)
+ARCH="x86"
+;;
+esac
+
+
+OUTPUT_DIR=$OUTPUT_ROOT_DIR/$ABI
+mkdir -p $OUTPUT_DIR
+
+cd ..
+CC=android/$CC CXX=android/$CXX CGO_ENABLED=1 CGO_CFLAGS=$CGO_CFLAGS GOOS=android GOARCH=$GOARCH GOARM=$GOARM \
+go build -i -pkgdir $(pwd)/android/$OUTPUT_DIR -buildmode=c-shared -o android/src/main/jniLibs/$ABI/libgomain.so
+cd android
+
 done
-
-mkdir -p $BUILD_DIR
-
-#$ANDROID_HOME/ndk-bundle/build/tools/make_standalone_toolchain.py \
-#		--api=$ANDROID_API --install-dir=$BUILD_DIR/toolchain \
-#		--arch=arm --stl libc++
