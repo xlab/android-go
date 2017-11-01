@@ -5,7 +5,7 @@ android {
 
     defaultConfig {
         ndk {
-            abiFilters rootProject.ext.archs
+            abiFilters rootProject.ext.archs.split(",")
         }
     }
     buildTypes {

@@ -7,7 +7,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.0.0'
     }
     ext {
-        archs = "armeabi-v7a"
+        archs = "armeabi-v7a,x86"
         sdkVersion = 26
     }
 }
