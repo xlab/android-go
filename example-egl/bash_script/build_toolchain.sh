@@ -2,6 +2,12 @@
 #Working directory is <project root>/android
 set -e
 
+if ! [ -d "$ANDROID_HOME" ];
+then
+printf "ANDROID_HOME does not point to any directory. Please set ANDROID_HOME variable\n"
+exit 1
+fi
+
 ABIS=($(echo $1 | sed 's/,/ /g'))
 ANDROID_API=$2
 printf "Preparing toolchains for ABIs: %s Android API: %s\n" "${ABIS[*]}" $ANDROID_API
