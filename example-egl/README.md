@@ -12,37 +12,32 @@ behaviour:
 
 ### Prerequisites
 
-There is no additional prerequisites, the project fully inherits the same
-structure as the [example] app provides, make sure you were able to run it
-first. Just to make sure that everything works smoothly for your OS, environment
-setup and the device itself.
+* Install the latest Android SDK or extract the Android SDK command line tools into your preferred Android SDK root (available as archive at https://developer.android.com/studio/index.html, see bottom of page).
+
+* Make sure you have the `$ANDROID_HOME` environment variable set to the Android SDK root (default is `$HOME/android-sdk`).
 
 [example]: https://github.com/xlab/android-go/tree/master/example
 
-### Structure
+### Building
 
 ```
-$ tree .
-.
-├── Makefile
-├── android
-│   ├── AndroidManifest.xml
-│   ├── Makefile
-│   ├── jni
-│   │   ├── Android.mk
-│   │   └── Application.mk
-│   └── res
-├── display.go
-├── main.go
-└── sensor.go
-
-3 directories, 9 files
+$ ./gradlew build
 ```
 
-### Running
+### Deploying
 
 ```
-$ make
-$ make install
-$ make listen
+$ ./gradlew installDebug
 ```
+Use adb to make sure your phone attached correctly:
+```
+$ adb devices
+```
+
+### Cleanup
+
+To remove standalone toolchains you can execute:
+```
+$ ./gradlew cleanToolchain
+```
+Toolchains will be regenerated on the next build.

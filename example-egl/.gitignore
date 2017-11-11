@@ -1,7 +1,14 @@
 .DS_Store
+.gradle
+.idea
+*.iml
+build/
+android/build
+android/build_go
 android/bin/
 android/build.xml
 android/jni/lib/
+android/src/main/jniLibs
 android/libs/
 android/local.properties
 android/obj/

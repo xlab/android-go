@@ -9,7 +9,7 @@
         <activity android:name="android.app.NativeActivity"
                 android:label="EGLActivity"
                 android:configChanges="orientation|keyboardHidden">
-            <meta-data android:name="android.app.lib_name" android:value="example" />
+            <meta-data android:name="android.app.lib_name" android:value="gomain" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
