@@ -1,6 +1,6 @@
 #!/bin/bash
 #Working directory is <project root>/android
-set -ex
+set -e
 
 ABIS=($(echo $1 | sed 's/,/ /g'))
 ANDROID_API=$2
@@ -44,10 +44,11 @@ OUTPUT_DIR="$OUTPUT_ROOT_DIR/$ABI"
 mkdir -p "$OUTPUT_DIR"
 
 cd ..
+set -x
 CURRENT_DIR=$(pwd)
 CC="$CURRENT_DIR/android/$CC" CXX="$CURRENT_DIR/android/$CXX" CGO_ENABLED=1 \
 CGO_CFLAGS="$CGO_CFLAGS" GOOS=android GOARCH="$GOARCH" GOARM="$GOARM" \
 go build -i -pkgdir "$CURRENT_DIR/android/$OUTPUT_DIR" -buildmode=c-shared -o "android/src/main/jniLibs/$ABI/libgomain.so"
 cd android
-
+set +x
 done

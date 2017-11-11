@@ -8,9 +8,6 @@ printf "Preparing toolchains for ABIs: %s Android API: %s\n" "${ABIS[*]}" $ANDRO
 
 
 TOOLCHAIN_ROOT_DIR=build_go/toolchain
-printf "Cleaning toolchains root directory: %s\n" "$TOOLCHAIN_ROOT_DIR"
-rm -rf "$TOOLCHAIN_ROOT_DIR"
-mkdir -p "$TOOLCHAIN_ROOT_DIR"
 
 declare -A ARCHS
 for ABI in ${ABIS[*]}
@@ -26,15 +23,20 @@ ARCH="x86"
 continue
 ;;
 esac
-printf "Toolchain will be created for arch: %s (ABI: %s)\n" $ARCH $ABI
 
 ARCHS[$ARCH]=1
 done
 
 for ARCH in ${!ARCHS[*]}
 do
-
 TOOLCHAIN_DIR="$TOOLCHAIN_ROOT_DIR/$ARCH"
+
+if [ -d "$TOOLCHAIN_DIR" ];
+then
+printf "Using existing standalone toolchain for arch: %s\n" $ARCH
+continue
+fi
+
 printf "Making standalone toolchain for arch: %s\n" $ARCH
 set -x
 "$ANDROID_HOME"/ndk-bundle/build/tools/make_standalone_toolchain.py \

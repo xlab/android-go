@@ -24,7 +24,17 @@ task prepareToolchain(type: Exec) {
     commandLine '../bash_script/build_toolchain.sh', rootProject.ext.archs, rootProject.ext.sdkVersion
 }
 
+task cleanToolchain(type: Exec) {
+    commandLine 'rm', '-r', 'build_go/toolchain'
+}
+
+task cleanOutput(type: Exec) {
+    commandLine 'rm', '-r', 'build_go/output'
+}
+
+
 afterEvaluate {
     buildGo.dependsOn prepareToolchain
     preBuild.dependsOn buildGo
+    clean.dependsOn cleanOutput
 }
