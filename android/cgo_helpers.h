@@ -18,7 +18,6 @@
 #include <android/rect.h>
 #include <android/sensor.h>
 #include <android/storage_manager.h>
-#include <android/tts.h>
 #include <android/window.h>
 #include <jni.h>
 #include "jni_call.h"
