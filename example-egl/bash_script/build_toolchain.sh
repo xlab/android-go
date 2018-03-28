@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #Working directory is <project root>/android
 set -e
 
