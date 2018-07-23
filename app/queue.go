@@ -69,6 +69,15 @@ func handleEvents(queue *android.InputQueue, evHandler func(ev *android.InputEve
 			continue
 		}
 		evHandler(ev)
-		android.InputQueueFinishEvent(queue, ev, 0)
+		var response int32 = 0
+
+		switch android.InputEventGetType(ev) {
+		case android.InputEventTypeKey:
+			key := android.KeyEventGetKeyCode(ev)
+			if key == android.KeycodeBack {
+				response = 1
+			}
+		}
+		android.InputQueueFinishEvent(queue, ev, response)
 	}
 }
