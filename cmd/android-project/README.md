@@ -7,7 +7,7 @@ I used `android project update` to simply create Ant build scripts for the proje
 ### Installation
 
 ```
-go get github.com/xlab/android-go/cmd/android-project
+go install github.com/xlab/android-go/cmd/android-project@latest
 ```
 
 Also you must set `$ANDROID_HOME` to your Android SDK location, e.g.
@@ -19,7 +19,7 @@ export ANDROID_HOME=/Users/xlab/Library/Android/sdk
 ### Usage
 
 ```
-Usage: android-project update [--sdk] [--target] --name --path
+Usage: android-project update [--sdk] [--target] [--force] --name --path
 
 Updates an Android project (must already have an AndroidManifest.xml)
 ```
