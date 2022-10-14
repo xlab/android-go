@@ -60,7 +60,7 @@ func cmdUpdateFunc(c *cli.Cmd) {
 		EnvVar:    "ANDROID_HOME",
 		HideValue: true,
 	})
-	c.Spec = "[--sdk] [--target] --name --path"
+	c.Spec = "[--sdk] [--target] [--force] --name --path"
 	c.Action = func() {
 		defer closer.Close()
 
