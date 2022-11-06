@@ -101,7 +101,7 @@ func onResume(activity *C.ANativeActivity) {
 	defaultApp.lifecycleEvents <- event
 }
 
-type SaveStateFunc func(activity *android.NativeActivity, size *uint32) unsafe.Pointer
+type SaveStateFunc func(activity *android.NativeActivity, size uintptr) unsafe.Pointer
 
 //export onSaveInstanceState
 func onSaveInstanceState(activity *C.ANativeActivity, outSize *C.size_t) unsafe.Pointer {
@@ -113,7 +113,7 @@ func onSaveInstanceState(activity *C.ANativeActivity, outSize *C.size_t) unsafe.
 		return nil
 	}
 	activityRef := android.NewNativeActivityRef(unsafe.Pointer(activity))
-	result := fn(activityRef, (*uint32)(outSize))
+	result := fn(activityRef, uintptr(unsafe.Pointer(outSize)))
 	return result
 }
 
@@ -123,7 +123,7 @@ type WindowFocusEvent struct {
 }
 
 //export onWindowFocusChanged
-func onWindowFocusChanged(activity *C.ANativeActivity, hasFocus int) {
+func onWindowFocusChanged(activity *C.ANativeActivity, hasFocus C.int) {
 	defaultApp.initWG.Wait()
 
 	out := defaultApp.getWindowFocusEventsOut()
